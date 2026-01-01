@@ -20,8 +20,16 @@ else:
     print("Loading config.production.")
     app.config.from_object('azureproject.production')
 
+#app.config.update(
+#    SQLALCHEMY_DATABASE_URI=app.config.get('DATABASE_URI'),
+#    SQLALCHEMY_TRACK_MODIFICATIONS=False,
+#)
+
+# 接続文字列を直接指定
+conn_str = "Driver={ODBC Driver 18 for SQL Server};Server=tcp:testdb01.database.windows.net,1433;Database=free-sql-db-8650869;Uid=dbadmin;Pwd={dbdb@1008};Encrypt=yes;TrustServerCertificate=yes;Connection Timeout=60;"
+
 app.config.update(
-    SQLALCHEMY_DATABASE_URI=app.config.get('DATABASE_URI'),
+    SQLALCHEMY_DATABASE_URI=f"mssql+pyodbc:///?odbc_connect={conn_str}",
     SQLALCHEMY_TRACK_MODIFICATIONS=False,
 )
 
